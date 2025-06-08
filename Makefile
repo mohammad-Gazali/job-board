@@ -3,3 +3,6 @@ run: build
 
 build:
 	@go build -o bin/job-board cmd/api/main.go
+
+sqlc:
+	@sqlc generate -f db/sqlc.yaml

@@ -3,30 +3,24 @@ package server
 import (
 	"fmt"
 	"net/http"
-	"os"
-	"strconv"
 
-	"github.com/mohammad-gazali/job-board/internal/database"
-
-	_ "github.com/joho/godotenv/autoload"
+	"github.com/mohammad-gazali/job-board/internal/db"
 )
 
 type Server struct {
-	port int
-
-	db database.Service
+	config *ServerConfig
 }
 
-func NewServer() *http.Server {
-	port, _ := strconv.Atoi(os.Getenv("PORT"))
+type ServerConfig struct {
+	Port int
+	Queries *db.Queries
+}
 
-	s := &Server{
-		port: port,
-		db: database.New(),
-	}
+func NewServer(config *ServerConfig) *http.Server {
+	s := &Server{ config: config }
 
 	return &http.Server{
-		Addr: fmt.Sprintf(":%d", s.port),
+		Addr: fmt.Sprintf(":%d", s.config.Port),
 		Handler: s.RegisterRoutes(),
 		// you can add IdleTimeout, ReadTimeout and WriteTimeout
 	}
