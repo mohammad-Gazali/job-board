@@ -1,0 +1,26 @@
+basePath: /api/v1
+info:
+  contact: {}
+  description: API for dealing with job opportunities for both companies and employees
+    sides
+  title: Documentation for Job Board
+  version: "1"
+paths:
+  /hello:
+    get:
+      consumes:
+      - application/json
+      description: say hello
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties:
+              type: string
+            type: object
+      summary: Get Hello
+      tags:
+      - examples
+swagger: "2.0"

@@ -5,14 +5,26 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/swaggo/http-swagger/v2"
+	
+	_ "github.com/mohammad-gazali/job-board/docs"
 )
 
 func (s *Server) RegisterRoutes() http.Handler {
-	r := chi.NewRouter()
+	router := chi.NewRouter()
 
-	r.Use(middleware.Logger)
+	router.Use(middleware.Logger)
 
-	r.Get("/", s.helloWorldHandler)
+	router.Mount("/swagger", httpSwagger.WrapHandler)
 
-	return r
+	router.Route("/api/v1", func(r chi.Router) {
+		r.Get("/", redirectToDocsHandler)
+		r.Get("/hello", s.helloWorldHandler)
+	})
+
+	return router
+}
+
+func redirectToDocsHandler(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/swagger/index.html", http.StatusSeeOther)
 }

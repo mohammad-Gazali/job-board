@@ -9,12 +9,17 @@ import (
 	"strconv"
 
 	"github.com/jackc/pgx/v5"
-	"github.com/mohammad-gazali/job-board/internal/db"
+	"github.com/mohammad-gazali/job-board/internal/repository"
 	"github.com/mohammad-gazali/job-board/internal/server"
 
 	_ "github.com/joho/godotenv/autoload"
 )
 
+// @title Documentation for Job Board
+// @description API for dealing with job opportunities for both companies and employees sides
+// @version 1
+
+// @BasePath /api/v1
 func run() error {
 	ctx := context.Background()
 
@@ -25,7 +30,7 @@ func run() error {
 	}
 	defer conn.Close(ctx)
 
-	queries := db.New(conn)
+	queries := repository.New(conn)
 
 	port, _ := strconv.Atoi(os.Getenv("PORT"))
 	config := &server.ServerConfig{

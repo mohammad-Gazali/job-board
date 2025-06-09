@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/mohammad-gazali/job-board/internal/db"
+	"github.com/mohammad-gazali/job-board/internal/repository"
 )
 
 type Server struct {
@@ -13,7 +13,7 @@ type Server struct {
 
 type ServerConfig struct {
 	Port int
-	Queries *db.Queries
+	Queries *repository.Queries
 }
 
 func NewServer(config *ServerConfig) *http.Server {

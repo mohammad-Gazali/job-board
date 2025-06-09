@@ -2,14 +2,16 @@
 // versions:
 //   sqlc v1.29.0
 
-package db
+package repository
 
 import (
 	"github.com/jackc/pgx/v5/pgtype"
 )
 
-type Post struct {
-	ID        int32
-	Title     string
+type User struct {
+	ID        int64
+	Email     string
+	Username  string
+	Password  string
 	CreatedAt pgtype.Timestamptz
 }
